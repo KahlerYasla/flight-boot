@@ -29,5 +29,45 @@ public class FlightDAO extends BaseDAO {
 
     private double price;
 
-    // Constructors, getters, setters
+    // #region Getters and Setters
+    public AirportDAO getDepartureAirport() {
+        return departureAirport;
+    }
+
+    public void setDepartureAirport(AirportDAO departureAirport) {
+        this.departureAirport = departureAirport;
+    }
+
+    public AirportDAO getArrivalAirport() {
+        return arrivalAirport;
+    }
+
+    public void setArrivalAirport(AirportDAO arrivalAirport) {
+        this.arrivalAirport = arrivalAirport;
+    }
+
+    public LocalDateTime getDepartureDateTime() {
+        return departureDateTime;
+    }
+
+    public void setDepartureDateTime(LocalDateTime departureDateTime) {
+        this.departureDateTime = departureDateTime;
+    }
+
+    public LocalDateTime getReturnDateTime() {
+        return returnDateTime;
+    }
+
+    public void setReturnDateTime(LocalDateTime returnDateTime) {
+        this.returnDateTime = returnDateTime;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    // #endregion Getters and Setters
 }

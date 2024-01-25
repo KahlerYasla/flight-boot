@@ -11,5 +11,13 @@ public class AirportDAO extends BaseDAO {
 
     private String city;
 
-    // Constructors, getters, setters
+    // #region Getters and Setters
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+    // #endregion
 }
