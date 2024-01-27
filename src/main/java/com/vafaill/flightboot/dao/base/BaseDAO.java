@@ -18,6 +18,11 @@ public abstract class BaseDAO implements Serializable {
     private Long id;
     private Status status = Status.ACTIVE;
 
+    public BaseDAO(Long id) {
+        this.id = id;
+        this.status = Status.ACTIVE;
+    }
+
     // #region Getters and Setters
     public Status getStatus() {
         return status;

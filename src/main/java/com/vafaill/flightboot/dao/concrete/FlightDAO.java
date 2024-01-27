@@ -1,6 +1,9 @@
 package com.vafaill.flightboot.dao.concrete;
 
 import java.time.LocalDateTime;
+
+import java.util.Optional;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -24,10 +27,20 @@ public class FlightDAO extends BaseDAO {
     @Column(name = "departure_datetime")
     private LocalDateTime departureDateTime;
 
-    @Column(name = "return_datetime")
-    private LocalDateTime returnDateTime;
+    @Column(name = "return_datetime", nullable = true)
+    private Optional<LocalDateTime> returnDateTime;
 
-    private double price;
+    private Double price;
+
+    public FlightDAO(Long id, AirportDAO departureAirport, AirportDAO arrivalAirport, LocalDateTime departureDateTime,
+            Optional<LocalDateTime> returnDateTime, Double price) {
+        super(id);
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureDateTime = departureDateTime;
+        this.returnDateTime = returnDateTime;
+        this.price = price;
+    }
 
     // #region Getters and Setters
     public AirportDAO getDepartureAirport() {
@@ -54,19 +67,19 @@ public class FlightDAO extends BaseDAO {
         this.departureDateTime = departureDateTime;
     }
 
-    public LocalDateTime getReturnDateTime() {
+    public Optional<LocalDateTime> getReturnDateTime() {
         return returnDateTime;
     }
 
-    public void setReturnDateTime(LocalDateTime returnDateTime) {
+    public void setReturnDateTime(Optional<LocalDateTime> returnDateTime) {
         this.returnDateTime = returnDateTime;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     // #endregion Getters and Setters

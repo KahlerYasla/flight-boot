@@ -11,6 +11,11 @@ public class AirportDAO extends BaseDAO {
 
     private String city;
 
+    public AirportDAO(Long id, String city) {
+        super(id);
+        this.city = city;
+    }
+
     // #region Getters and Setters
     public String getCity() {
         return city;
