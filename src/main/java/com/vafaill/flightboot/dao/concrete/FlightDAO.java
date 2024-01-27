@@ -2,8 +2,6 @@ package com.vafaill.flightboot.dao.concrete;
 
 import java.time.LocalDateTime;
 
-import java.util.Optional;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -28,12 +26,12 @@ public class FlightDAO extends BaseDAO {
     private LocalDateTime departureDateTime;
 
     @Column(name = "return_datetime", nullable = true)
-    private Optional<LocalDateTime> returnDateTime;
+    private LocalDateTime returnDateTime;
 
     private Double price;
 
     public FlightDAO(Long id, AirportDAO departureAirport, AirportDAO arrivalAirport, LocalDateTime departureDateTime,
-            Optional<LocalDateTime> returnDateTime, Double price) {
+            LocalDateTime returnDateTime, Double price) {
         super(id);
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
@@ -67,11 +65,11 @@ public class FlightDAO extends BaseDAO {
         this.departureDateTime = departureDateTime;
     }
 
-    public Optional<LocalDateTime> getReturnDateTime() {
+    public LocalDateTime getReturnDateTime() {
         return returnDateTime;
     }
 
-    public void setReturnDateTime(Optional<LocalDateTime> returnDateTime) {
+    public void setReturnDateTime(LocalDateTime returnDateTime) {
         this.returnDateTime = returnDateTime;
     }
 

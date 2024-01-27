@@ -2,12 +2,11 @@ package com.vafaill.flightboot.dao.base;
 
 import java.io.Serializable;
 
-import org.springframework.data.annotation.Id;
-
 import com.vafaill.flightboot.dao.Status;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass

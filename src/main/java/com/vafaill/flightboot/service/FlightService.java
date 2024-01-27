@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.vafaill.flightboot.dao.Status;
 import com.vafaill.flightboot.dao.concrete.FlightDAO;
 import com.vafaill.flightboot.dto.flight.FlightDTO;
 import com.vafaill.flightboot.mapper.FlightMapper;
@@ -22,6 +23,7 @@ public class FlightService {
     @Autowired
     private FlightMapper _flightMapper;
 
+    // GET -----------------------------------------------------
     public List<FlightDTO> getAllFlights() {
         List<FlightDTO> flightDTOs = new ArrayList<>();
 
@@ -71,26 +73,41 @@ public class FlightService {
         return flightDTOs;
     }
 
+    // POST ----------------------------------------------------
     public void addFlight(@NonNull FlightDTO flightDTO) {
         FlightDAO flightDAO = _flightMapper.toFlightDAO(flightDTO);
 
         _flightRepo.save(flightDAO);
     }
 
+    // DELETE --------------------------------------------------
     public void deleteFlight(@NonNull FlightDTO flightDTO) {
         FlightDAO flightDAO = _flightMapper.toFlightDAO(flightDTO);
+
+        flightDAO.setStatus(Status.INACTIVE);
 
         _flightRepo.delete(flightDAO);
     }
 
     public void deleteFlightById(@NonNull long id) {
+        FlightDAO flightDAO = _flightRepo.findById(id).get();
+
+        flightDAO.setStatus(Status.INACTIVE);
+
         _flightRepo.deleteById(id);
     }
 
     public void deleteAllFlights() {
+        Iterable<FlightDAO> flightDAOs = _flightRepo.findAll();
+
+        for (FlightDAO flightDAO : flightDAOs) {
+            flightDAO.setStatus(Status.INACTIVE);
+        }
+
         _flightRepo.deleteAll();
     }
 
+    // PUT -----------------------------------------------------
     public void updateFlight(@NonNull FlightDTO flightDTO) {
         FlightDAO flightDAO = _flightMapper.toFlightDAO(flightDTO);
 
@@ -109,5 +126,10 @@ public class FlightService {
 
     public long countFlights() {
         return _flightRepo.count();
+    }
+
+    // Other ---------------------------------------------------
+    public void fetchFlightDataFromThirdPartyAPI() {
+        System.out.println("Fetching flight data from third party API...");
     }
 }

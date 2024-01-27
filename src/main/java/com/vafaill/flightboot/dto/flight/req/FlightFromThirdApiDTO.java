@@ -1,4 +1,4 @@
-package com.vafaill.flightboot.dto.flight;
+package com.vafaill.flightboot.dto.flight.req;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class FlightDTO {
+public class FlightFromThirdApiDTO {
     private long id;
     private String departureCityName;
     private String arrivalCityName;

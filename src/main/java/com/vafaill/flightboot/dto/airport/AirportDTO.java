@@ -8,5 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AirportDTO {
+    private long id;
     private String city;
 }
