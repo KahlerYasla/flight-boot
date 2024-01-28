@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@RequestMapping("/flight")
+@RequestMapping("api/flight")
 public class FlightController {
 
     @Autowired

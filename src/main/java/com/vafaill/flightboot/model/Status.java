@@ -1,4 +1,4 @@
-package com.vafaill.flightboot.dao;
+package com.vafaill.flightboot.model;
 
 public enum Status {
     ACTIVE,

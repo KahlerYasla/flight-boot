@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@RequestMapping("/airport")
+@RequestMapping("api/airport")
 public class AirportController {
 
     @Autowired
     private AirportService _airportService;
+
+    @GetMapping("/ping")
+    public String getMethodName() {
+        return new String("pong");
+    }
 
     @GetMapping("/")
     public Iterable<AirportDTO> getAllAirports() {

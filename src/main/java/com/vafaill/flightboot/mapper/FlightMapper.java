@@ -3,9 +3,10 @@ package com.vafaill.flightboot.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.vafaill.flightboot.dao.concrete.AirportDAO;
-import com.vafaill.flightboot.dao.concrete.FlightDAO;
 import com.vafaill.flightboot.dto.flight.FlightDTO;
+import com.vafaill.flightboot.model.concrete.Airport;
+import com.vafaill.flightboot.model.concrete.Flight;
+import com.vafaill.flightboot.repo.AirportRepo;
 import com.vafaill.flightboot.repo.FlightRepo;
 
 @Component
@@ -14,8 +15,11 @@ public class FlightMapper {
     @Autowired
     private FlightRepo _flightRepo;
 
+    @Autowired
+    private AirportRepo _airportRepo;
+
     // #region toDTO methods
-    public FlightDTO toFlightDTO(FlightDAO flightDAO) {
+    public FlightDTO toFlightDTO(Flight flightDAO) {
         FlightDTO flightDTO = new FlightDTO();
 
         flightDTO.setId(flightDAO.getId());
@@ -30,13 +34,13 @@ public class FlightMapper {
     // #endregion
 
     // #region toDAO methods
-    public FlightDAO toFlightDAO(FlightDTO flightDTO) {
+    public Flight toFlightDAO(FlightDTO flightDTO) {
         long id = 0;
 
         // Find if there is a flight with the same properties
-        Iterable<FlightDAO> flightDAOs = _flightRepo.findAll();
+        Iterable<Flight> flightDAOs = _flightRepo.findAll();
 
-        for (FlightDAO flightDAO : flightDAOs) {
+        for (Flight flightDAO : flightDAOs) {
             if (flightDAO.getDepartureAirport().getCity().equals(flightDTO.getDepartureCityName()) &&
                     flightDAO.getArrivalAirport().getCity().equals(flightDTO.getArrivalCityName()) &&
                     flightDAO.getDepartureDateTime().equals(flightDTO.getDepartureDateTime()) &&
@@ -46,16 +50,27 @@ public class FlightMapper {
             }
         }
 
-        if (id == 0) {
-            // New id
-            id = flightDAOs.spliterator().getExactSizeIfKnown() + 1;
+        // Get arrival and departure airports
+        Airport departureAirport = null;
+        Airport arrivalAirport = null;
+
+        Iterable<Airport> airportDAOs = _airportRepo.findAll();
+
+        for (Airport airportDAO : airportDAOs) {
+            if (airportDAO.getCity().equals(flightDTO.getDepartureCityName())) {
+                departureAirport = airportDAO;
+            }
+            if (airportDAO.getCity().equals(flightDTO.getArrivalCityName())) {
+                arrivalAirport = airportDAO;
+            }
         }
 
-        // Create Arrival Airport and Departure Airport
-        AirportDAO arrivalAirport = new AirportDAO(id, flightDTO.getArrivalCityName());
-        AirportDAO departureAirport = new AirportDAO(id, flightDTO.getDepartureCityName());
+        // If departureAirport or arrivalAirport is null, throw an exception
+        if (departureAirport == null || arrivalAirport == null) {
+            throw new NullPointerException("Departure or arrival airport is null");
+        }
 
-        FlightDAO flightDAO = new FlightDAO(id, departureAirport, arrivalAirport, flightDTO.getDepartureDateTime(),
+        Flight flightDAO = new Flight(departureAirport, arrivalAirport, flightDTO.getDepartureDateTime(),
                 flightDTO.getReturnDateTime(), flightDTO.getPrice());
 
         return flightDAO;

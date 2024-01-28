@@ -1,18 +1,17 @@
-package com.vafaill.flightboot.dao.concrete;
+package com.vafaill.flightboot.model.concrete;
 
-import com.vafaill.flightboot.dao.base.BaseDAO;
+import com.vafaill.flightboot.model.base.BaseModel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "airports")
-public class AirportDAO extends BaseDAO {
+public class Airport extends BaseModel {
 
     private String city;
 
-    public AirportDAO(Long id, String city) {
-        super(id);
+    public Airport(String city) {
         this.city = city;
     }
 

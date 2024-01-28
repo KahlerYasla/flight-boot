@@ -21,8 +21,8 @@ public class FlightScheduledService {
     @Autowired
     private FlightService flightService;
 
-    // Run every 10 seconds
-    @Scheduled(fixedRate = 10000)
+    // Run every 30 seconds
+    @Scheduled(fixedRate = 30000)
     public void fetchAndSaveFlightData() throws URISyntaxException, IOException, InterruptedException {
         // Prepare request parameters
         Map<String, String> params = Map.of(

@@ -1,8 +1,8 @@
-package com.vafaill.flightboot.dao.base;
+package com.vafaill.flightboot.model.base;
 
 import java.io.Serializable;
 
-import com.vafaill.flightboot.dao.Status;
+import com.vafaill.flightboot.model.Status;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,15 +10,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class BaseDAO implements Serializable {
+public abstract class BaseModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Status status = Status.ACTIVE;
 
-    public BaseDAO(Long id) {
-        this.id = id;
+    public BaseModel() {
         this.status = Status.ACTIVE;
     }
 

@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vafaill.flightboot.dao.Status;
-import com.vafaill.flightboot.dao.concrete.FlightDAO;
 import com.vafaill.flightboot.dto.flight.FlightDTO;
 import com.vafaill.flightboot.mapper.FlightMapper;
+import com.vafaill.flightboot.model.Status;
+import com.vafaill.flightboot.model.concrete.Flight;
 import com.vafaill.flightboot.repo.FlightRepo;
 
 import io.micrometer.common.lang.NonNull;
@@ -27,9 +27,9 @@ public class FlightService {
     public List<FlightDTO> getAllFlights() {
         List<FlightDTO> flightDTOs = new ArrayList<>();
 
-        Iterable<FlightDAO> flightDAOs = _flightRepo.findAll();
+        Iterable<Flight> flightDAOs = _flightRepo.findAll();
 
-        for (FlightDAO flightDAO : flightDAOs) {
+        for (Flight flightDAO : flightDAOs) {
             flightDTOs.add(_flightMapper.toFlightDTO(flightDAO));
         }
 
@@ -37,7 +37,7 @@ public class FlightService {
     }
 
     public FlightDTO getFlightById(@NonNull long id) {
-        FlightDAO flightDAO = _flightRepo.findById(id).get();
+        Flight flightDAO = _flightRepo.findById(id).get();
 
         return _flightMapper.toFlightDTO(flightDAO);
     }
@@ -45,9 +45,9 @@ public class FlightService {
     public List<FlightDTO> getFlightsByDepartureCityName(@NonNull String departureCityName) {
         List<FlightDTO> flightDTOs = new ArrayList<>();
 
-        Iterable<FlightDAO> flightDAOs = _flightRepo.findAll();
+        Iterable<Flight> flightDAOs = _flightRepo.findAll();
 
-        for (FlightDAO flightDAO : flightDAOs) {
+        for (Flight flightDAO : flightDAOs) {
             if (flightDAO.getDepartureAirport().getCity().equals(departureCityName)) {
                 flightDTOs.add(_flightMapper.toFlightDTO(flightDAO));
             }
@@ -59,9 +59,9 @@ public class FlightService {
     public List<FlightDTO> getFlightsMatchedBy(@NonNull FlightDTO flightDTO) {
         List<FlightDTO> flightDTOs = new ArrayList<>();
 
-        Iterable<FlightDAO> flightDAOs = _flightRepo.findAll();
+        Iterable<Flight> flightDAOs = _flightRepo.findAll();
 
-        for (FlightDAO flightDAO : flightDAOs) {
+        for (Flight flightDAO : flightDAOs) {
             if (flightDAO.getDepartureAirport().getCity().equals(flightDTO.getDepartureCityName()) &&
                     flightDAO.getArrivalAirport().getCity().equals(flightDTO.getArrivalCityName()) &&
                     flightDAO.getDepartureDateTime().equals(flightDTO.getDepartureDateTime()) &&
@@ -75,14 +75,14 @@ public class FlightService {
 
     // POST ----------------------------------------------------
     public void addFlight(@NonNull FlightDTO flightDTO) {
-        FlightDAO flightDAO = _flightMapper.toFlightDAO(flightDTO);
+        Flight flightDAO = _flightMapper.toFlightDAO(flightDTO);
 
         _flightRepo.save(flightDAO);
     }
 
     // DELETE --------------------------------------------------
     public void deleteFlight(@NonNull FlightDTO flightDTO) {
-        FlightDAO flightDAO = _flightMapper.toFlightDAO(flightDTO);
+        Flight flightDAO = _flightMapper.toFlightDAO(flightDTO);
 
         flightDAO.setStatus(Status.INACTIVE);
 
@@ -90,7 +90,7 @@ public class FlightService {
     }
 
     public void deleteFlightById(@NonNull long id) {
-        FlightDAO flightDAO = _flightRepo.findById(id).get();
+        Flight flightDAO = _flightRepo.findById(id).get();
 
         flightDAO.setStatus(Status.INACTIVE);
 
@@ -98,9 +98,9 @@ public class FlightService {
     }
 
     public void deleteAllFlights() {
-        Iterable<FlightDAO> flightDAOs = _flightRepo.findAll();
+        Iterable<Flight> flightDAOs = _flightRepo.findAll();
 
-        for (FlightDAO flightDAO : flightDAOs) {
+        for (Flight flightDAO : flightDAOs) {
             flightDAO.setStatus(Status.INACTIVE);
         }
 
@@ -109,13 +109,13 @@ public class FlightService {
 
     // PUT -----------------------------------------------------
     public void updateFlight(@NonNull FlightDTO flightDTO) {
-        FlightDAO flightDAO = _flightMapper.toFlightDAO(flightDTO);
+        Flight flightDAO = _flightMapper.toFlightDAO(flightDTO);
 
         _flightRepo.save(flightDAO);
     }
 
     public boolean flightExists(@NonNull FlightDTO flightDTO) {
-        FlightDAO flightDAO = _flightMapper.toFlightDAO(flightDTO);
+        Flight flightDAO = _flightMapper.toFlightDAO(flightDTO);
 
         return _flightRepo.existsById(flightDAO.getId());
     }
