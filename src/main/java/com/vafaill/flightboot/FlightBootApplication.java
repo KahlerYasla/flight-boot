@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
+
 @EntityScan(basePackages = "com.vafaill.flightboot.model.concrete")
 public class FlightBootApplication {
 
