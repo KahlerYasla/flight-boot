@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vafaill.flightboot.dto.flight.FlightDTO;
+import com.vafaill.flightboot.dto.flight.req.FlightFromThirdApiDTO;
 import com.vafaill.flightboot.mapper.FlightMapper;
 import com.vafaill.flightboot.model.Status;
 import com.vafaill.flightboot.model.concrete.Flight;
@@ -126,10 +127,5 @@ public class FlightService {
 
     public long countFlights() {
         return _flightRepo.count();
-    }
-
-    // Other ---------------------------------------------------
-    public void fetchFlightDataFromThirdPartyAPI() {
-        System.out.println("Fetching flight data from third party API...");
     }
 }

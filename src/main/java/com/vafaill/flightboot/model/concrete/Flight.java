@@ -40,4 +40,9 @@ public class Flight extends BaseModel {
         this.price = price;
     }
 
+    public Flight(long id, String departureCityName, String arrivalCityName, LocalDateTime departureDateTime2,
+            LocalDateTime returnDateTime2, Double price2) {
+        // TODO Auto-generated constructor stub
+    }
+
 }
