@@ -38,7 +38,9 @@ public class FlightController {
 
     @GetMapping("/match")
     public Iterable<FlightDTO> getFlightsMatchedBy(FlightDTO flightDTO) {
-        return _flightService.getFlightsMatchedBy(flightDTO);
+        boolean isOneWay = flightDTO.getDepartureCityName() == null || flightDTO.getDepartureCityName().isEmpty();
+
+        return _flightService.getFlightsMatchedBy(flightDTO, isOneWay);
     }
 
     @PostMapping("/add")

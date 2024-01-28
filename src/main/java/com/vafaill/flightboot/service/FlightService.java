@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vafaill.flightboot.dto.flight.FlightDTO;
-import com.vafaill.flightboot.dto.flight.req.FlightFromThirdApiDTO;
 import com.vafaill.flightboot.mapper.FlightMapper;
 import com.vafaill.flightboot.model.Status;
 import com.vafaill.flightboot.model.concrete.Flight;
@@ -57,7 +56,7 @@ public class FlightService {
         return flightDTOs;
     }
 
-    public List<FlightDTO> getFlightsMatchedBy(@NonNull FlightDTO flightDTO) {
+    public List<FlightDTO> getFlightsMatchedBy(@NonNull FlightDTO flightDTO, boolean isOneWay) {
         List<FlightDTO> flightDTOs = new ArrayList<>();
 
         Iterable<Flight> flightDAOs = _flightRepo.findAll();
@@ -68,6 +67,12 @@ public class FlightService {
                     flightDAO.getDepartureDateTime().equals(flightDTO.getDepartureDateTime()) &&
                     flightDAO.getReturnDateTime().equals(flightDTO.getReturnDateTime())) {
                 flightDTOs.add(_flightMapper.toFlightDTO(flightDAO));
+            }
+        }
+
+        if (isOneWay) {
+            for (FlightDTO flight : flightDTOs) {
+                flight.setReturnDateTime(null);
             }
         }
 
